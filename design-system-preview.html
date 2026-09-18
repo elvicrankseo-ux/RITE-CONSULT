@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rite Consult — Design System Preview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+
+  /* ============ TOKENS ============ */
+  :root {
+    --ink-950: #1B1B18;
+    --ink-800: #33322C;
+    --paper-50: #F6F4EF;
+    --paper-100: #EDEAE1;
+    --stone-600: #57564C;
+    --stone-400: #8B8879;
+    --stone-300d: #C8C5B8;
+    --stone-500d: #94917F;
+    --border-light: #DEDACE;
+    --border-dark: rgba(246,244,239,0.14);
+    --accent: #2F6B52;
+    --accent-hover: #24503F;
+    --accent-dark: #5FA383;
+    --accent-dark-hover: #79B89B;
+
+    --font-serif: 'Source Serif 4', Georgia, 'Times New Roman', serif;
+    --font-sans: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+    --sp-xs: 4px; --sp-sm: 8px; --sp-md: 16px; --sp-lg: 24px;
+    --sp-xl: 32px; --sp-2xl: 48px; --sp-3xl: 80px;
+
+    --section-space: 128px;
+    --container-pad: 80px;
+    --measure: 680px;
+    --max-width: 1280px;
+
+    --radius: 3px;
+    --shadow-elevate: 0 4px 16px rgba(27,27,24,0.08);
+
+    --ease: cubic-bezier(0.4,0,0.2,1);
+    --dur-fast: 120ms;
+    --dur-base: 200ms;
+    --dur-slow: 400ms;
+  }
+
+  @media (max-width: 1023px) {
+    :root { --section-space: 96px; --container-pad: 48px; }
+  }
+  @media (max-width: 639px) {
+    :root { --section-space: 64px; --container-pad: 24px; }
+  }
+
+  /* ============ RESET / BASE ============ */
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  body {
+    margin: 0;
+    background: var(--paper-50);
+    color: var(--ink-950);
+    font-family: var(--font-sans);
+    font-size: 17px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  img, svg { display: block; max-width: 100%; }
+
+  a { color: inherit; text-decoration: none; }
+
+  h1, h2, h3, h4, p { margin: 0; }
+
+  .container {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding-left: var(--container-pad);
+    padding-right: var(--container-pad);
+  }
+
+  .section { padding-top: var(--section-space); padding-bottom: var(--section-space); }
+  .section-light { background: var(--paper-50); }
+  .section-alt { background: var(--paper-100); }
+  .section-dark { background: var(--ink-950); color: var(--paper-50); }
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+    border-radius: 1px;
+  }
+  .section-dark :focus-visible { outline-color: var(--accent-dark); }
+
+  /* ============ EYEBROW / LABEL ============ */
+  .eyebrow {
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 13px;
+    letter-spacing: 0.02em;
+    color: var(--accent);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: var(--sp-md);
+  }
+  .eyebrow::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    background: var(--accent);
+    display: inline-block;
+    flex: none;
+  }
+  .section-dark .eyebrow { color: var(--accent-dark); }
+  .section-dark .eyebrow::before { background: var(--accent-dark); }
+
+  /* ============ TYPE SCALE ============ */
+  .display {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-size: 72px;
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+  }
+  .h1 {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-size: 56px;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+  }
+  .h2 {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-size: 40px;
+    line-height: 1.15;
+    letter-spacing: -0.005em;
+  }
+  .h3 {
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 1.3;
+  }
+  .h4 {
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 1.4;
+  }
+  .body-large {
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 1.6;
+    color: var(--stone-600);
+    max-width: var(--measure);
+  }
+  .body {
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-size: 17px;
+    line-height: 1.65;
+    color: var(--stone-600);
+    max-width: var(--measure);
+  }
+  .small {
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--stone-400);
+  }
+  .section-dark .body-large,
+  .section-dark .body { color: var(--stone-300d); }
+  .section-dark .small { color: var(--stone-500d); }
+
+  .number {
+    font-family: var(--font-serif);
+    font-weight: 500;
+    font-size: 56px;
+    line-height: 1;
+    font-variant-numeric: oldstyle-nums proportional-nums;
+  }
+
+  @media (max-width: 639px) {
+    .display { font-size: 40px; }
+    .h1 { font-size: 34px; }
+    .h2 { font-size: 28px; }
+    .h3 { font-size: 20px; }
+    .body-large { font-size: 18px; }
+    .number { font-size: 40px; }
+  }
+
+  /* ============ LINKS ============ */
+  .text-link {
+    color: var(--accent);
+    font-weight: 500;
+    background-image: linear-gradient(var(--accent), var(--accent));
+    background-repeat: no-repeat;
+    background-position: 0 100%;
+    background-size: 0% 1px;
+    transition: background-size var(--dur-base) var(--ease);
+    padding-bottom: 2px;
+  }
+  .text-link:hover, .text-link:focus-visible { background-size: 100% 1px; }
+  .section-dark .text-link { color: var(--accent-dark); }
+  .section-dark .text-link { background-image: linear-gradient(var(--accent-dark), var(--accent-dark)); }
+
+  /* ============ BUTTONS ============ */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 48px;
+    padding: 0 28px;
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 15px;
+    letter-spacing: 0.01em;
+    border-radius: var(--radius);
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: background-color var(--dur-base) var(--ease),
+                border-color var(--dur-base) var(--ease),
+                color var(--dur-base) var(--ease);
+  }
+  .btn-primary {
+    background: var(--ink-950);
+    border-color: var(--ink-950);
+    color: var(--paper-50);
+  }
+  .btn-primary:hover { background: var(--accent); border-color: var(--accent); }
+  .section-dark .btn-primary {
+    background: var(--paper-50);
+    border-color: var(--paper-50);
+    color: var(--ink-950);
+  }
+  .section-dark .btn-primary:hover {
+    background: var(--accent-dark);
+    border-color: var(--accent-dark);
+    color: var(--ink-950);
+  }
+  .btn-secondary {
+    background: transparent;
+    border: 1.5px solid var(--border-light);
+    color: var(--ink-950);
+  }
+  .btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+  .section-dark .btn-secondary {
+    border-color: var(--border-dark);
+    color: var(--paper-50);
+  }
+  .section-dark .btn-secondary:hover { border-color: var(--accent-dark); color: var(--accent-dark); }
+  .btn-disabled { opacity: 0.4; pointer-events: none; }
+
+  /* ============ HEADER / NAV ============ */
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    height: 88px;
+    display: flex;
+    align-items: center;
+    background: transparent;
+    border-bottom: 1px solid transparent;
+    transition: background-color var(--dur-base) var(--ease), border-color var(--dur-base) var(--ease);
+  }
+  .site-header.is-scrolled {
+    background: rgba(246,244,239,0.92);
+    -webkit-backdrop-filter: saturate(120%) blur(6px);
+    backdrop-filter: saturate(120%) blur(6px);
+    border-bottom: 1px solid var(--border-light);
+  }
+  .nav-row {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--sp-xl);
+  }
+  .logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 16px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-950);
+  }
+  .logo-mark { width: 22px; height: 22px; flex: none; }
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-xl);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .nav-links a {
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 15px;
+    letter-spacing: 0.01em;
+    color: var(--ink-950);
+    position: relative;
+    padding-bottom: 4px;
+  }
+  .nav-links a::after {
+    content: "";
+    position: absolute;
+    left: 0; bottom: 0;
+    width: 0%;
+    height: 2px;
+    background: var(--accent);
+    transition: width var(--dur-base) var(--ease);
+  }
+  .nav-links a:hover::after, .nav-links a:focus-visible::after { width: 100%; }
+  .nav-primary { display: flex; align-items: center; gap: var(--sp-xl); }
+
+  .menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    padding: 8px;
+    cursor: pointer;
+  }
+  .menu-toggle svg { width: 24px; height: 24px; }
+
+  .mobile-panel {
+    position: fixed;
+    inset: 0;
+    background: var(--paper-50);
+    z-index: 60;
+    display: flex;
+    flex-direction: column;
+    padding: var(--container-pad);
+    transform: translateX(100%);
+    transition: transform var(--dur-slow) var(--ease);
+  }
+  .mobile-panel.is-open { transform: translateX(0); }
+  .mobile-panel-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--sp-3xl); }
+  .mobile-links { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--sp-lg); flex: 1; }
+  .mobile-links a {
+    font-family: var(--font-serif);
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--ink-950);
+  }
+  .mobile-cta { margin-top: auto; }
+
+  @media (max-width: 1023px) {
+    .nav-primary { display: none; }
+    .menu-toggle { display: inline-flex; }
+  }
+
+  /* ============ HERO ============ */
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 7fr 5fr;
+    gap: var(--sp-3xl);
+    align-items: center;
+  }
+  .hero-copy .display { margin-bottom: var(--sp-lg); }
+  .hero-copy .body-large { margin-bottom: var(--sp-xl); }
+  .hero-actions { display: flex; gap: var(--sp-md); flex-wrap: wrap; }
+
+  .hero-visual {
+    border: 1px solid var(--border-light);
+    background: var(--paper-100);
+    aspect-ratio: 4 / 5;
+    padding: var(--sp-xl);
+  }
+
+  @media (max-width: 1023px) {
+    .hero-grid { grid-template-columns: 1fr; }
+    .hero-visual { order: -1; aspect-ratio: 16/9; }
+  }
+
+  .reveal { opacity: 0; transform: translateY(8px); animation: fadeUp var(--dur-slow) var(--ease) forwards; }
+  .reveal-1 { animation-delay: 0ms; }
+  .reveal-2 { animation-delay: 90ms; }
+  .reveal-3 { animation-delay: 180ms; }
+  .reveal-4 { animation-delay: 270ms; }
+  @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; animation: none; }
+  }
+
+  /* ============ GRID / COLUMN DEMOS ============ */
+  .two-col {
+    display: grid;
+    grid-template-columns: minmax(0,1fr) minmax(0,1fr);
+    gap: var(--sp-3xl);
+  }
+  @media (max-width: 1023px) {
+    .two-col { grid-template-columns: 1fr; gap: var(--sp-2xl); }
+  }
+
+  /* ============ APPROACH (numbered sequence, no cards) ============ */
+  .approach-list { border-top: 1px solid var(--border-light); }
+  .approach-item {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: var(--sp-xl);
+    padding: var(--sp-xl) 0;
+    border-bottom: 1px solid var(--border-light);
+  }
+  .approach-item .number { color: var(--stone-400); }
+  @media (max-width: 639px) {
+    .approach-item { grid-template-columns: 48px 1fr; gap: var(--sp-md); }
+    .approach-item .number { font-size: 28px; }
+  }
+
+  /* ============ CARDS ============ */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--sp-lg);
+  }
+  @media (max-width: 1023px) { .card-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 639px) { .card-grid { grid-template-columns: 1fr; } }
+
+  .card {
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius);
+    padding: var(--sp-xl);
+    background: var(--paper-50);
+    transition: border-color var(--dur-base) var(--ease);
+  }
+  .card:hover { border-color: var(--ink-950); }
+  .card .h4 { margin-bottom: var(--sp-sm); }
+
+  /* ============ STATS ROW (dark) ============ */
+  .stat-row { display: flex; gap: var(--sp-3xl); flex-wrap: wrap; }
+  .stat .number { color: var(--accent-dark); margin-bottom: var(--sp-sm); }
+  .stat .small { max-width: 220px; }
+
+  /* ============ SWATCHES ============ */
+  .swatch-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: var(--sp-lg);
+  }
+  .swatch {
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  .swatch-fill { height: 72px; }
+  .swatch-label { padding: var(--sp-sm) var(--sp-md); font-family: var(--font-sans); }
+  .swatch-label .name { font-weight: 600; font-size: 14px; display: block; }
+  .swatch-label .hex { font-size: 13px; color: var(--stone-400); }
+
+  /* ============ BORDER DEMO ============ */
+  .border-demo { display: flex; gap: var(--sp-2xl); flex-wrap: wrap; }
+  .border-sample {
+    width: 220px;
+    padding: var(--sp-lg);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius);
+  }
+  .border-sample.dark {
+    background: var(--ink-950);
+    border-color: var(--border-dark);
+    color: var(--paper-50);
+  }
+
+  /* ============ FOOTER ============ */
+  .site-footer {
+    border-top: 1px solid var(--border-light);
+    padding-top: var(--sp-2xl);
+    padding-bottom: var(--sp-2xl);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--sp-lg);
+  }
+  .footer-links { display: flex; gap: var(--sp-lg); list-style: none; margin: 0; padding: 0; flex-wrap: wrap; }
+  .footer-links a { font-size: 14px; color: var(--stone-600); }
+  .footer-links a:hover { color: var(--accent); }
+
+  .stack { display: flex; flex-direction: column; gap: var(--sp-2xl); }
+  .stack-sm { display: flex; flex-direction: column; gap: var(--sp-md); }
+  .mb-lg { margin-bottom: var(--sp-lg); }
+  .mb-xl { margin-bottom: var(--sp-xl); }
+  .mb-2xl { margin-bottom: var(--sp-2xl); }
+
+</style>
+</head>
+<body>
+
+  <!-- ============ HEADER ============ -->
+  <header class="site-header" id="siteHeader">
+    <div class="container nav-row">
+      <a href="#top" class="logo">
+        <svg class="logo-mark" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M2 2H14V14" stroke="#1B1B18" stroke-width="1.6"/>
+          <rect x="12" y="12" width="8" height="8" fill="#2F6B52"/>
+        </svg>
+        Rite Consult
+      </a>
+      <nav class="nav-primary" aria-label="Primary">
+        <ul class="nav-links">
+          <li><a href="#capabilities">Services</a></li>
+          <li><a href="#approach">Our Approach</a></li>
+          <li><a href="#who">Who We Work With</a></li>
+          <li><a href="#work">Our Work</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+        <a href="#contact" class="btn btn-primary">Start a Conversation</a>
+      </nav>
+      <button class="menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobilePanel">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#1B1B18" stroke-width="1.6" stroke-linecap="round">
+          <line x1="3" y1="7" x2="21" y2="7"/>
+          <line x1="3" y1="17" x2="21" y2="17"/>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- ============ MOBILE PANEL ============ -->
+  <div class="mobile-panel" id="mobilePanel" aria-hidden="true">
+    <div class="mobile-panel-top">
+      <a href="#top" class="logo">
+        <svg class="logo-mark" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M2 2H14V14" stroke="#1B1B18" stroke-width="1.6"/>
+          <rect x="12" y="12" width="8" height="8" fill="#2F6B52"/>
+        </svg>
+        Rite Consult
+      </a>
+      <button class="menu-toggle" id="menuClose" aria-label="Close menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#1B1B18" stroke-width="1.6" stroke-linecap="round">
+          <line x1="5" y1="5" x2="19" y2="19"/>
+          <line x1="19" y1="5" x2="5" y2="19"/>
+        </svg>
+      </button>
+    </div>
+    <ul class="mobile-links">
+      <li><a href="#capabilities">Services</a></li>
+      <li><a href="#approach">Our Approach</a></li>
+      <li><a href="#who">Who We Work With</a></li>
+      <li><a href="#work">Our Work</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <a href="#contact" class="btn btn-primary mobile-cta">Start a Conversation</a>
+  </div>
+
+  <main id="top">
+
+    <!-- ============ HERO ============ -->
+    <section class="section section-light">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <div class="eyebrow reveal reveal-1">Technology &amp; digital consulting</div>
+          <h1 class="display reveal reveal-2">Technology decisions are easier with the right people in the room.</h1>
+          <p class="body-large reveal reveal-3">Rite Consult helps businesses understand, adopt, and use technology to work smarter, connect better, and grow. We bring strategy, technology, and creative work together in one team.</p>
+          <div class="hero-actions reveal reveal-4">
+            <a href="#contact" class="btn btn-primary">Start a Conversation</a>
+            <a href="#capabilities" class="btn btn-secondary">Explore Our Services</a>
+          </div>
+        </div>
+        <div class="hero-visual" aria-hidden="true">
+          <svg viewBox="0 0 300 340" width="100%" height="100%" fill="none">
+            <line x1="30" y1="60" x2="150" y2="30" stroke="#1B1B18" stroke-width="1"/>
+            <line x1="150" y1="30" x2="260" y2="90" stroke="#1B1B18" stroke-width="1"/>
+            <line x1="30" y1="60" x2="70" y2="200" stroke="#1B1B18" stroke-width="1"/>
+            <line x1="150" y1="30" x2="150" y2="180" stroke="#1B1B18" stroke-width="1"/>
+            <line x1="260" y1="90" x2="230" y2="230" stroke="#1B1B18" stroke-width="1"/>
+            <line x1="70" y1="200" x2="150" y2="180" stroke="#1B1B18" stroke-width="1"/>
+            <line x1="150" y1="180" x2="230" y2="230" stroke="#1B1B18" stroke-width="1"/>
+            <line x1="70" y1="200" x2="110" y2="300" stroke="#1B1B18" stroke-width="1"/>
+            <line x1="230" y1="230" x2="190" y2="300" stroke="#1B1B18" stroke-width="1"/>
+            <line x1="110" y1="300" x2="190" y2="300" stroke="#1B1B18" stroke-width="1"/>
+            <circle cx="30" cy="60" r="4" fill="#1B1B18"/>
+            <circle cx="150" cy="30" r="4" fill="#1B1B18"/>
+            <circle cx="260" cy="90" r="4" fill="#1B1B18"/>
+            <circle cx="150" cy="180" r="5" fill="#2F6B52"/>
+            <circle cx="70" cy="200" r="4" fill="#1B1B18"/>
+            <circle cx="230" cy="230" r="4" fill="#1B1B18"/>
+            <circle cx="110" cy="300" r="4" fill="#1B1B18"/>
+            <circle cx="190" cy="300" r="4" fill="#1B1B18"/>
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ TYPE SCALE ============ -->
+    <section class="section section-alt">
+      <div class="container">
+        <div class="eyebrow">Type system</div>
+        <h2 class="h2 mb-2xl" style="max-width:620px;">Source Serif 4 carries ideas. IBM Plex Sans carries structure.</h2>
+
+        <div class="stack">
+          <div>
+            <p class="display">Display heading</p>
+            <p class="small">Source Serif 4 · 600 · 72px / 1.05 · used once per page, in the hero</p>
+          </div>
+          <div>
+            <p class="h1">Section heading, level one</p>
+            <p class="small">Source Serif 4 · 600 · 56px / 1.1 · major page divisions</p>
+          </div>
+          <div>
+            <p class="h2">Section heading, level two</p>
+            <p class="small">Source Serif 4 · 600 · 40px / 1.15 · subsections within a page</p>
+          </div>
+          <div>
+            <p class="h3">Section heading, level three</p>
+            <p class="small">IBM Plex Sans · 600 · 24px / 1.3 · the handoff point from serif to sans</p>
+          </div>
+          <div>
+            <p class="h4">Card or list title, level four</p>
+            <p class="small">IBM Plex Sans · 600 · 18px / 1.4</p>
+          </div>
+          <div>
+            <p class="body-large">Body large is used for the one or two sentences directly under a headline, where a little more air helps the idea land before the reader moves into regular body copy.</p>
+            <p class="small">IBM Plex Sans · 400 · 20px / 1.6 · max-width 680px</p>
+          </div>
+          <div>
+            <p class="body">Body copy is set at a comfortable reading size with a measure held under roughly 75 characters, so paragraphs stay easy to scan even in wide sections of the page.</p>
+            <p class="small">IBM Plex Sans · 400 · 17px / 1.65</p>
+          </div>
+          <div>
+            <p class="small">Small text is used for captions, metadata, and supporting detail — never for primary content.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ APPROACH — numbered sequence ============ -->
+    <section class="section section-light" id="approach">
+      <div class="container two-col">
+        <div>
+          <div class="eyebrow">Our approach</div>
+          <h2 class="h2 mb-lg">How we work</h2>
+          <p class="body">Numbering is used here because this content genuinely is a sequence. Elsewhere on the site — like the service list below — numbering is deliberately left out.</p>
+        </div>
+        <div class="approach-list">
+          <div class="approach-item">
+            <span class="number">01</span>
+            <div>
+              <p class="h4 mb-sm">Discover</p>
+              <p class="body">We learn how the business actually runs before proposing anything.</p>
+            </div>
+          </div>
+          <div class="approach-item">
+            <span class="number">02</span>
+            <div>
+              <p class="h4 mb-sm">Design</p>
+              <p class="body">Strategy and design decisions are made together, not handed off in sequence.</p>
+            </div>
+          </div>
+          <div class="approach-item">
+            <span class="number">03</span>
+            <div>
+              <p class="h4 mb-sm">Build</p>
+              <p class="body">Technology, content, and creative work move in parallel toward one launch.</p>
+            </div>
+          </div>
+          <div class="approach-item" style="border-bottom:none;">
+            <span class="number">04</span>
+            <div>
+              <p class="h4 mb-sm">Grow</p>
+              <p class="body">We stay close after launch, adjusting based on what the data shows.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CARDS — capabilities ============ -->
+    <section class="section section-alt" id="capabilities">
+      <div class="container">
+        <div class="eyebrow">Capabilities</div>
+        <h2 class="h2 mb-2xl" style="max-width:560px;">Six practices, one team.</h2>
+        <div class="card-grid">
+          <div class="card">
+            <p class="h4">Digital Presence</p>
+            <p class="body small" style="max-width:none;">Websites, content, and brand systems that represent your business accurately online.</p>
+          </div>
+          <div class="card">
+            <p class="h4">SEO &amp; Digital Growth</p>
+            <p class="body small" style="max-width:none;">Search visibility and digital marketing built on structure, not shortcuts.</p>
+          </div>
+          <div class="card">
+            <p class="h4">Technology Solutions</p>
+            <p class="body small" style="max-width:none;">Practical systems and integrations that remove friction from daily operations.</p>
+          </div>
+          <div class="card">
+            <p class="h4">AI &amp; Automation</p>
+            <p class="body small" style="max-width:none;">Automation and applied AI that take repetitive work off your team's plate.</p>
+          </div>
+          <div class="card">
+            <p class="h4">Digital Consulting</p>
+            <p class="body small" style="max-width:none;">Clear-eyed advice on which technology investments are worth making, and when.</p>
+          </div>
+          <div class="card">
+            <p class="h4">Media &amp; Creative</p>
+            <p class="body small" style="max-width:none;">Photography, video, and design built for how your business actually communicates.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ DARK SECTION ============ -->
+    <section class="section section-dark">
+      <div class="container">
+        <div class="eyebrow">Accent on dark</div>
+        <h2 class="h2 mb-2xl" style="max-width:600px;">The same green, tuned lighter for dark backgrounds.</h2>
+        <div class="stat-row mb-2xl">
+          <div class="stat">
+            <p class="number">06</p>
+            <p class="small">Core service areas, working as one team rather than separate departments.</p>
+          </div>
+          <div class="stat">
+            <p class="number">1:1</p>
+            <p class="small">Direct access to the people actually doing the work, not just account managers.</p>
+          </div>
+        </div>
+        <div class="hero-actions">
+          <a href="#contact" class="btn btn-primary">Start a Conversation</a>
+          <a href="#capabilities" class="btn btn-secondary">Explore Our Services</a>
+        </div>
+        <p class="body" style="margin-top:var(--sp-2xl);">A <a href="#" class="text-link">text link on a dark background</a> uses the same underline-draw interaction as on light sections, just in the lighter accent tone.</p>
+      </div>
+    </section>
+
+    <!-- ============ COMPONENTS: BUTTONS / LINKS / LABELS / BORDERS ============ -->
+    <section class="section section-light">
+      <div class="container">
+        <div class="eyebrow">Components</div>
+        <h2 class="h2 mb-2xl">Buttons, links, labels, and borders</h2>
+
+        <div class="stack">
+          <div>
+            <p class="h4 mb-lg">Buttons</p>
+            <div class="hero-actions">
+              <a href="#" class="btn btn-primary">Start a Conversation</a>
+              <a href="#" class="btn btn-secondary">Explore Our Services</a>
+              <span class="btn btn-primary btn-disabled">Disabled state</span>
+            </div>
+          </div>
+
+          <div>
+            <p class="h4 mb-lg">Links &amp; labels</p>
+            <p class="body mb-md">This is a paragraph containing <a href="#" class="text-link">an inline text link</a> that draws its underline on hover and keyboard focus.</p>
+            <div class="eyebrow" style="margin-bottom:0;">Sample eyebrow label</div>
+          </div>
+
+          <div>
+            <p class="h4 mb-lg">Borders</p>
+            <div class="border-demo">
+              <div class="border-sample">
+                <p class="small" style="margin-bottom:8px;">On light backgrounds</p>
+                <p class="body" style="max-width:none;">1px solid, border-light</p>
+              </div>
+              <div class="border-sample dark">
+                <p class="small" style="margin-bottom:8px; color:var(--stone-300d);">On dark backgrounds</p>
+                <p class="body" style="max-width:none; color:var(--paper-50);">1px solid, border-dark</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ COLOR PALETTE ============ -->
+    <section class="section section-alt">
+      <div class="container">
+        <div class="eyebrow">Color palette</div>
+        <h2 class="h2 mb-2xl">Warm ink, warm paper, one accent</h2>
+        <div class="swatch-grid">
+          <div class="swatch">
+            <div class="swatch-fill" style="background:#1B1B18;"></div>
+            <div class="swatch-label"><span class="name">Ink 950</span><span class="hex">#1B1B18</span></div>
+          </div>
+          <div class="swatch">
+            <div class="swatch-fill" style="background:#F6F4EF;"></div>
+            <div class="swatch-label"><span class="name">Paper 50</span><span class="hex">#F6F4EF</span></div>
+          </div>
+          <div class="swatch">
+            <div class="swatch-fill" style="background:#EDEAE1;"></div>
+            <div class="swatch-label"><span class="name">Paper 100</span><span class="hex">#EDEAE1</span></div>
+          </div>
+          <div class="swatch">
+            <div class="swatch-fill" style="background:#57564C;"></div>
+            <div class="swatch-label"><span class="name">Stone 600</span><span class="hex">#57564C</span></div>
+          </div>
+          <div class="swatch">
+            <div class="swatch-fill" style="background:#8B8879;"></div>
+            <div class="swatch-label"><span class="name">Stone 400</span><span class="hex">#8B8879</span></div>
+          </div>
+          <div class="swatch">
+            <div class="swatch-fill" style="background:#2F6B52;"></div>
+            <div class="swatch-label"><span class="name">Accent</span><span class="hex">#2F6B52</span></div>
+          </div>
+          <div class="swatch">
+            <div class="swatch-fill" style="background:#24503F;"></div>
+            <div class="swatch-label"><span class="name">Accent hover</span><span class="hex">#24503F</span></div>
+          </div>
+          <div class="swatch">
+            <div class="swatch-fill" style="background:#5FA383;"></div>
+            <div class="swatch-label"><span class="name">Accent on dark</span><span class="hex">#5FA383</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ FOOTER ============ -->
+    <section class="container">
+      <footer class="site-footer">
+        <a href="#top" class="logo">
+          <svg class="logo-mark" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M2 2H14V14" stroke="#1B1B18" stroke-width="1.6"/>
+            <rect x="12" y="12" width="8" height="8" fill="#2F6B52"/>
+          </svg>
+          Rite Consult
+        </a>
+        <ul class="footer-links">
+          <li><a href="#capabilities">Services</a></li>
+          <li><a href="#approach">Our Approach</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+        <p class="small">Design system preview — Phase 1</p>
+      </footer>
+    </section>
+
+  </main>
+
+  <script>
+    (function () {
+      var header = document.getElementById('siteHeader');
+      function onScroll() {
+        if (window.scrollY > 40) header.classList.add('is-scrolled');
+        else header.classList.remove('is-scrolled');
+      }
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+
+      var toggle = document.getElementById('menuToggle');
+      var close = document.getElementById('menuClose');
+      var panel = document.getElementById('mobilePanel');
+
+      function openMenu() {
+        panel.classList.add('is-open');
+        panel.setAttribute('aria-hidden', 'false');
+        toggle.setAttribute('aria-expanded', 'true');
+        close.focus();
+      }
+      function closeMenu() {
+        panel.classList.remove('is-open');
+        panel.setAttribute('aria-hidden', 'true');
+        toggle.setAttribute('aria-expanded', 'false');
+        toggle.focus();
+      }
+      toggle.addEventListener('click', openMenu);
+      close.addEventListener('click', closeMenu);
+      panel.querySelectorAll('a').forEach(function (a) {
+        a.addEventListener('click', closeMenu);
+      });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && panel.classList.contains('is-open')) closeMenu();
+      });
+    })();
+  </script>
+
+</body>
+</html>
