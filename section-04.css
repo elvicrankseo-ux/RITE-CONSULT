@@ -1,0 +1,180 @@
+/* ==========================================================================
+   SECTION 04 — Rite Method™
+   Append this block to the END of style.css. No palette changes needed —
+   this reuses the tokens the Section 03 palette update already set.
+   ========================================================================== */
+.method {
+  background: var(--color-surface);
+  border-top: 1px solid var(--color-border);
+  padding-block: var(--space-12);
+}
+
+.method__inner {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-8);
+}
+
+.method__heading {
+  font-weight: 500;
+  font-size: clamp(1.75rem, 3.2vw, 2.5rem);
+  line-height: var(--lh-tight);
+  margin-top: var(--space-5);
+  max-width: 20ch;
+}
+
+.method__lede {
+  margin-top: var(--space-5);
+  color: var(--color-text-secondary);
+  font-size: var(--fs-lede);
+  line-height: var(--lh-snug);
+  max-width: 40ch;
+}
+
+.method__list {
+  position: relative;
+  border-top: 1px solid var(--color-border);
+}
+
+/* The thin connecting thread running through all six stages — only shown
+   once the fixed number column exists at the desktop layout below. */
+.method__stage {
+  border-bottom: 1px solid var(--color-border);
+  position: relative;
+}
+
+.method__stage-inner {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-5);
+  padding-block: var(--space-6);
+  border-radius: var(--radius-sm);
+  transition: background-color var(--duration-base) var(--ease);
+}
+
+.method__stage:hover .method__stage-inner,
+.method__stage:focus-within .method__stage-inner {
+  background-color: color-mix(in srgb, var(--color-accent) 5%, transparent);
+}
+
+.method__number {
+  flex: 0 0 3rem;
+  width: 3rem;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 1.75rem;
+  line-height: 1;
+  color: var(--color-text-muted);
+  transition: color var(--duration-base) var(--ease),
+              transform var(--duration-base) var(--ease);
+}
+
+.method__stage:hover .method__number,
+.method__stage:focus-within .method__number {
+  color: var(--color-accent);
+  transform: translateX(2px);
+}
+
+.method__content {
+  flex: 1;
+  min-width: 0;
+}
+
+.method__title {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 1.3125rem;
+  color: var(--color-ink);
+  transition: color var(--duration-base) var(--ease);
+}
+
+.method__stage:hover .method__title,
+.method__stage:focus-within .method__title {
+  color: var(--color-accent);
+}
+
+.method__hook {
+  margin-top: var(--space-2);
+  font-weight: 600;
+  color: var(--color-ink);
+  font-size: 0.9375rem;
+}
+
+.method__desc {
+  margin-top: var(--space-2);
+  color: var(--color-text-secondary);
+  font-size: 0.9375rem;
+  line-height: var(--lh-snug);
+  max-width: 52ch;
+}
+
+.method__arrow {
+  flex-shrink: 0;
+  align-self: center;
+  color: var(--color-accent);
+  opacity: 0;
+  transform: translateX(-4px);
+  transition: opacity var(--duration-base) var(--ease),
+              transform var(--duration-base) var(--ease);
+}
+
+.method__stage:hover .method__arrow,
+.method__stage:focus-within .method__arrow {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+@media (min-width: 640px) {
+  .method__number { font-size: 2rem; flex-basis: 3.5rem; width: 3.5rem; }
+  .method__title { font-size: 1.4375rem; }
+}
+
+@media (min-width: 960px) {
+  .method__inner {
+    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+    gap: var(--space-10);
+    align-items: start;
+  }
+
+  .method__intro {
+    position: sticky;
+    top: calc(var(--header-height) + var(--space-8));
+  }
+
+  /* Subtle connecting thread through the number column, desktop only,
+     where the number width is fixed and predictable. */
+  .method__list {
+    position: relative;
+    padding-left: 0;
+  }
+
+  .method__list::before {
+    content: '';
+    position: absolute;
+    left: 1.75rem;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: var(--color-border);
+  }
+
+  .method__stage::before {
+    content: '';
+    position: absolute;
+    left: calc(1.75rem - 3.5px);
+    top: var(--space-6);
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--color-surface);
+    border: 1.5px solid var(--color-border);
+    transition: border-color var(--duration-base) var(--ease),
+                background-color var(--duration-base) var(--ease);
+  }
+
+  .method__stage:hover::before,
+  .method__stage:focus-within::before {
+    border-color: var(--color-accent);
+    background-color: var(--color-accent);
+  }
+}

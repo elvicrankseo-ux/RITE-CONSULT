@@ -1,0 +1,149 @@
+/* ==========================================================================
+   PALETTE UPDATE — applies to the ENTIRE site (Sections 1, 2, and 3)
+   Append this near the TOP of the block you paste in (before the Section 03
+   rules below). Because Sections 1–2 already reference var(--color-*)
+   everywhere instead of hardcoded hex, overriding these tokens re-themes
+   the header, buttons, hero visual, philosophy flow, and problem accordion
+   automatically — nothing else needs to change.
+
+   Only the six brand colors from the brief are used as sources. The extra
+   tokens below (muted text, borders, hover shades) are computed tints of
+   those six via color-mix(), not new primary colors.
+   ========================================================================== */
+:root {
+  --color-bg: #F6F4EF;             /* Warm Paper */
+  --color-surface: #EDEAE1;        /* Secondary warm neutral */
+  --color-ink: #1B1B18;            /* Ink */
+  --color-ink-soft: color-mix(in srgb, #1B1B18 85%, #57564C 15%);
+  --color-text-secondary: #57564C; /* Stone */
+  --color-text-muted: color-mix(in srgb, #57564C 55%, #F6F4EF 45%);
+  --color-border: color-mix(in srgb, #57564C 22%, #F6F4EF 78%);
+  --color-accent: #2F6B52;         /* Rite Green */
+  --color-accent-strong: color-mix(in srgb, #2F6B52 82%, #1B1B18 18%);
+  --color-accent-secondary: #5FA383; /* Secondary green — for lighter accent moments */
+  --color-on-accent: #F6F4EF;
+}
+
+/* ==========================================================================
+   SECTION 03 — Services ("What We Do")
+   Append this block to the END of style.css, after the palette update above.
+   ========================================================================== */
+.services {
+  padding-block: var(--space-12);
+}
+
+.services__inner {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-8);
+}
+
+.services__intro {
+  max-width: 40ch;
+}
+
+.services__heading {
+  font-weight: 500;
+  font-size: clamp(1.75rem, 3.2vw, 2.5rem);
+  line-height: var(--lh-tight);
+  margin-top: var(--space-5);
+}
+
+.services__lede {
+  margin-top: var(--space-5);
+  color: var(--color-text-secondary);
+  font-size: var(--fs-lede);
+  line-height: var(--lh-snug);
+}
+
+.services__list {
+  border-top: 1px solid var(--color-border);
+}
+
+.services__item {
+  border-bottom: 1px solid var(--color-border);
+}
+
+.services__row {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-5);
+  padding-block: var(--space-6);
+  padding-inline: var(--space-3);
+  margin-inline: calc(var(--space-3) * -1);
+  border-radius: var(--radius-sm);
+  transition: background-color var(--duration-base) var(--ease);
+}
+
+.services__row:hover,
+.services__row:focus-visible {
+  background-color: color-mix(in srgb, var(--color-accent) 6%, transparent);
+}
+
+.services__index {
+  flex-shrink: 0;
+  width: 2.25rem;
+  font-variant-numeric: tabular-nums;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  transition: color var(--duration-base) var(--ease);
+}
+
+.services__row:hover .services__index,
+.services__row:focus-visible .services__index {
+  color: var(--color-accent);
+}
+
+.services__body {
+  flex: 1;
+  min-width: 0;
+}
+
+.services__name {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 1.3125rem;
+  color: var(--color-ink);
+  transition: color var(--duration-base) var(--ease);
+}
+
+.services__row:hover .services__name,
+.services__row:focus-visible .services__name {
+  color: var(--color-accent);
+}
+
+.services__desc {
+  margin-top: var(--space-2);
+  color: var(--color-text-secondary);
+  font-size: 0.9375rem;
+  line-height: var(--lh-snug);
+  max-width: 52ch;
+}
+
+.services__arrow {
+  flex-shrink: 0;
+  align-self: center;
+  color: var(--color-text-muted);
+  transition: transform var(--duration-base) var(--ease),
+              color var(--duration-base) var(--ease);
+}
+
+.services__row:hover .services__arrow,
+.services__row:focus-visible .services__arrow {
+  color: var(--color-accent);
+  transform: translateX(4px);
+}
+
+@media (min-width: 640px) {
+  .services__row { gap: var(--space-6); }
+  .services__name { font-size: 1.4375rem; }
+}
+
+@media (min-width: 960px) {
+  .services__inner {
+    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+    gap: var(--space-10);
+    align-items: start;
+  }
+}
